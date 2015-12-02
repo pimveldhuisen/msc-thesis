@@ -1,3 +1,10 @@
+Goals
+=====
+* Incetivise uploading.
+* Enable entry for new users.
+* Build trust over time.
+
+
 Problems
 ========
 
@@ -23,14 +30,21 @@ Solutions
 CRF:
 ---
 * Caclulate reputation based on a grid of resistors.
-* Download/Uploads are seen as *directional resistors*.
+* The reputation is based on upload contribution only.
+* This does not enforce a fixed ratio, but uploading is incentivized,
+ as a higher upload -> better reputation -> more download. 
+* Uploads are seen as *directional resistors*.
 * Reputation is not a property of a node, but a property of a path between nodes.
 * Reputation is calculated as the equivalent resistance between two nodes.
 * The value of the resistor is determined by the data size. (MBs)
+* Resistors are also introduced in the chronological direction of the chain, to reduce the effective weight of older uploads.
 * Depth of the crawl increases accuracy, but the algoritm converges fast.
 * Multichain keeps track of the transactions.
 
 
+* Slower peers cannot easily gain reputation from seeding popular content, but can do so by seeding rare content. This enables archive mode.
+
+* When anonymous tunneling is used, one of the relays could sign the upload, thus maintaining anonymity between peers.
 
 SAA:
 ---
