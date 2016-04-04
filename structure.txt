@@ -1,0 +1,67 @@
+Introduction
+	- What is Tribler
+	- Anonymous routing => bandwidth needed => share ratio enforcement
+	- Why is this difficult (a: distributed)
+	- Proposed solution: blockchain based accounting
+
+Problem description
+	- Tamper-proof record keeping system
+	- Layered system: a reputation system can be build on top of this
+	- Distributed	
+	- Scalability
+Design
+	- Protocol
+		- Datastructure -> fields used in database and wire packet
+		- Message sequence
+		- Asynchronous for performance: consequences for hashes
+	Implementation
+		- As a Tribler Community
+		- SQLite
+		- Dispersy dependency / independency
+
+Deployment strategy
+	- 'Do no harm'-policy
+	- Optional updates
+	- How do we enable useful measurements?
+	- Forced update: No backwards compatibility
+
+Experiments
+	- gumby
+		- Experiment 1
+			- Set-up
+			- Results
+				[Fancy image]
+			- Conclusions
+		- Experiment 2
+			(...)
+	- Real world tests
+		- Stats ( users, blocks, MB's, etc)
+		- What does the Block Graph look like
+		- What does the Interaction Graph look like
+
+
+Attacks & Defences
+	- Protocol
+		- False requests
+			- How does it work?
+			- Solution: check validity
+		- Don't sign downloads
+			- How does it work?
+			- Solution: don't interact with peers that don't sign
+		- Branching: 
+			- How does it work?
+			- Risk of discovery
+			- Solution: make the reputation layer such that this is not worthwhile
+		- Trick into branching
+			- How does it work?
+			- Solution: Responder has a responibility to check previous requests
+					
+	Implementation
+		- SQL Iinjection
+		- Hash collisons		
+		- DOS
+		
+
+
+Conclusion and Future Work
+
