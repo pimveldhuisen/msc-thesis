@@ -1,0 +1,37 @@
+----------
+Abstract
+--------
+
+----------------	
+Table of Contents
+---------------
+
+
+------------	
+Introduction
+------------
+
+----------
+Goal
+----------
+
+	Multichain is a distributed accounting system for peer to peer network interactions. It records interactions between peers that have taken place in a verifiable and consistent manner. This means that it is impossible for any of involved parties to later deny that a transaction has taken place, and that it is hard for any peer to hide a specific selection of his interactions. The system should function without any centralized party, without the requirement of full knowledge of the global state of the network, and limited network and computational resources, while at the same time being able to process a large number of interactions. The system should also be scalable: the number of total users in the network should not significantly impact the system strain for a node after a certain point.
+
+	The system can be used to account many different types of interaction data. However it is of course important that within a network, peers store the same type of data. An implementation of this general protocol should therefor specify the actual data that is to be exchanged.
+
+--------
+Overview
+--------
+	Interaction between peers are stored in blocks. The blocks contains the transaction data that is meant to be stored. This tranaction data will be signed by both peers using public-key cryptography, and hence the public keys of each peer is also included. Since the protocol distuinghuishes between a requester and a responder of a block, this distinction can be used for the specification of assymetric aspects of interactions. 
+	The peers also keep track of some aggregate over all their interaction. The integretity of is aggregate is backed by the whole body of transactions, and provides no additional information from the total of all transactions of that peer. However the aggregate provides an overview of the peers history when only a limited amount of blocks is available.
+
+
+ To prevent people from hiding some of their blocks, and thereby their history, the blocks are chained together to form a blockchain. This means that for each peer there exists a unique, ordered sequence of blocks. This order is indicated by a sequence number for each peer that is included in the block. To prevent peers from replacing blocks in the chain, each block contains a hash that refers to the previous block.
+
+---------------
+Data format
+-----------
+
+-----------	
+Message protocol
+-------------
