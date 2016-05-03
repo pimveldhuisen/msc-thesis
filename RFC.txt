@@ -23,15 +23,45 @@ Goal
 Overview
 --------
 	Interaction between peers are stored in blocks. The blocks contains the transaction data that is meant to be stored. This tranaction data will be signed by both peers using public-key cryptography, and hence the public keys of each peer is also included. Since the protocol distuinghuishes between a requester and a responder of a block, this distinction can be used for the specification of assymetric aspects of interactions. 
-	The peers also keep track of some aggregate over all their interaction. The integretity of is aggregate is backed by the whole body of transactions, and provides no additional information from the total of all transactions of that peer. However the aggregate provides an overview of the peers history when only a limited amount of blocks is available.
+	The peers also keep track of some aggregate over all their interaction. The integretity of is aggregate is backed by the whole body of transactions, and provides no additional information from the total of all transactions of that peer. However the aggregate provides an overview of the peers history when only a limited amount of blocks is available. The aggregate field and the total block history form points on a spectrum that represents the trade-off between confidence of the history of a peer and the cost of calculating the history. Validating the aggregate of a peer by iterating over all blocks of that peer is costly, in terms of the bandwidth required to transfer all blocks, the storage costs required to store all the blocks, and the computing power required to process all the blocks. This method of total validation does however provide maximum confidence of the history of the repective peer. On the other end of the spectrum, the aggregate field of the last known block directly provides some aggregate of the history, without involving validation data or calculations. However, this field does not provide a lot of confidence in and of itself, and could easily be faked. However, the systems provides strong incentives not to lie; when an aggregate does not match that of the previous block, this is easily detected by just collecting and checking the two consecutive blocks. Since all blocks are signed by both parties, the lying party cannout deny his lie, and we have irrefutable proof of lying. To check for such lies, a peer can validate an certain amount of recent blocks, from the most recent backwards by an arbitrary amount. This represents the other point on the spectrum; by validating more blocks we get closer to the point of maxmium confidence, by validating fewer blocks the validation is less costly.
 
 
- To prevent people from hiding some of their blocks, and thereby their history, the blocks are chained together to form a blockchain. This means that for each peer there exists a unique, ordered sequence of blocks. This order is indicated by a sequence number for each peer that is included in the block. To prevent peers from replacing blocks in the chain, each block contains a hash that refers to the previous block.
+ To prevent people from hiding some of their blocks, and thereby their history, the blocks are chained together to form a blockchain. This means that for each peer there exists a unique, ordered sequence of blocks. This order is indicated by a sequence number for each peer that is included in the block. To prevent peers from replacing blocks in the chain, each block contains a hash that refers to the previous block. 
+
+The idea is to operate on two levels. First of all, each peer has some reputation based on its interaction history. Other peers can evaluate this reputation using the information in the multichain and provide or refuse services based on this reputation. The second level consists of some peers that are lying about their history using the multichain. When evidence of such lies are aquired, this can be proved irrefutable by conflicting messages signed by the same peer. (The evidence is irrefutable assuming that the cryptography used to sign messages can not be broken, and the private key of the peers remains private.) This proof can then be broadcasted allong the peers in the network. Peers that are found lying should immedatly be refused any service for which the multichain is used, both because no reputation can be reliably assertained form the multichain, and to discourage lying in general.
 
 ---------------
 Data format
------------
+-------------
+The transaction part, which both peers always have:
+
+ - transaction data
+ - public key requester
+ - public key responder
+
+The requester part, that contains the multichain status of the requester, and its signature. This is initially only guaranteed to be known for the requester:
+ - agrregate requester
+ - sequence number requester
+ - previous hash requester
+ - signature requester (signs all fields above it)
+ - [Stored, but not send] hash_requester (hashes all fields above it)
+
+The responder part, same as above, but for the responder.
+ - total up responder
+ - total down responder
+ - sequence number responder
+ - previous hash responder
+ - signature responder (signs all fields above it (expect hash_requester))
+ - [Stored, but not send] hash_responder (hashes all fields above it (expect hash_requester))
+
 
 -----------	
 Message protocol
 -------------
+
+
+----
+Attacks & Defences
+---
+When a malicous peer wants to hide certain transactions that somehow reflect badly upon him, this is already hindered by the existence of sequence numbers. Imagine a peer with a history of a 100 blocks that wants to hide the 42nd block from the people he interacts with. Sequence numbers prevent the peer from presenting a consistent history without a 42nd block. The sequence numbers clearly indicate that a block is missing. To avoid this the malicous peer would have to modify the sequence number of all blocks from the 43rd upward, but this results in two problems. First of all, the counterparty signatures of all blocks were the malicous peer is the requester will now be invalid. Secondly, all modified blocks will now conflict with the blocks that previously had these sequence numbers, making it very likely that some peer in the network will find two conflicting blocks, making him able to produce irrefutable proof of lying. A better strategy would therefore be to create a new block with sequence number 42. This block can have valid signatures by the malicous peer and some other peer, being either wilfully cooperating, tricked, or a sybil. With this block, the malicous peer can the present a consistent history that does not include the problematic transaction. There are now however still 2 blocks with sequence number 42, both signed by the malicous peer. This means that it is still possible to provide irrefutable proof of lying if both blocks are found by the same peer. This is possible since this block is know by the counterparty in the original transaction, who can gossip it. The inclusion of the previous hash complicates this (already risky) attack even further. Since block 42 is replaced in this attack, the hash of the block changes (assuming of course there are no known collison attacks for the hashing algorithm used.). This means that the previous hash of block 43 now mismatches with the hash of block 42, making the history of the malicous peer internatlly inconsistent. To prevent this, the attacker must change the previous hash field of block 43, but this will make the previous hash of block 44 invalid. To remedy this, the whole chain upto the most recent block must be rewritten. This rewriting will however fail on the first block where the attacker is a requester, because in this case changing the previous hash will invalidate the signature
+of the counterparty. Another strategy is to branch the multichain, discarding the 42nd block and all following blocks, and continuing to build a history from the 41st block onward. This enables the attacker to present a consistent history, but there will be always at least one sequence number for which conflicting blocks can be found. Branching is more viable when it is done soon after the transaction to be hidden has taken place, limiting the amount of blocks that will conflict.
