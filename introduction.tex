@@ -1,9 +1,32 @@
 \chapter{Introduction}
 \label{chp:introduction}
-Many of us enjoy unrestricted access to the internet in all it's glory without being snooped on. At the same time however, a large portion of the world can not.\cite{https://en.wikipedia.org/wiki/Internet_censorship_and_surveillance_by_country}. One of the features of the Tribler software is to provide anonymous routing, in order to enable privacy and prevent censorship. This feature is currently usable in real life applications, but the performance is often lacking in comparison to open traffic. One of the root causes of the performance degradation is the increased bandwidth requirements. Since the traffic is routed through multiple hops, the total bandwidth requirements are proportional to the number of hops.
-
 \vspace{1\baselineskip}
 
 \noindent
+The introduction of the internet to the world in the nineties brought unprecedented opportunities for interaction and cooperation between people. However, without a powerful organizational structure, interacting people often act selfish and attempt to greedyly pursue their own goals. This often means that cooperation grinds to a halt and the benefits of synergy are lost to all. A famous example is the prisoners dillema, where game theory shows that fully rational individuals would not cooperate, even if it is in their best interest to do so. One situation where each individual's pursuit of his own goals leads to the devaluation of the community as a whole is the sharing of a common good. In a 1986 Science article Garrett Hardin showed that unregulated use of a limited common good leads to a situation where everybody is worse off \cite{hardin1968tragedy}. This is known as the tradgedy of the commons.\\
+\\
+Early internet applications that attemted to stimulate cooperation between internet users were also affected by these problems. This is strongly appearant in peer-to-peer file sharing networks. A study from 2000 showed that almost 70 \% of users of the Gnutella network were free riders; meaning that they used the network to access files from other users, but did not contribute files themselves \cite{adar2000free}. A similar experiment performed on the eDonkey network in 2004 identified 68 \% of the users as free riders \cite{edonkey2004}. These large percentages of peers that do not contribute to the network reduce the availability of scarce files, and the bandwith with which popular files can be downloaded, thus reducing the utility of the network. The performance of the network could potentially be much higher when all peers would contribute to the extend of their capability.\\
+\\
+One way to solve the problems with uncoperative users is to introduce a central party that regulates the users, enforcing certain behaviors. While this is an effective manner to create a more optimal mode of cooperation, it has it's downsides. The main drawback of this concept is that it centralizes power. While a benevolent dicator can often achieve great results, dicators can also create great injustice. Their is always the question of who can be trusted with the power to regulate the users, and if this entity will not abuse this power. Other disadvantages of the centralisation are more practical; the central party can be a performance bottleneck and it forms a single point of failure. \\
+\\
+BitTorrent \cite{} currently has the most succesfull decentralized  incentive mechanism, with tit for tat, which works like this:. Even there however, not all people cooperate, their are still many freeriders, and a lot of the work is done by a small group of people. 
+Distributed global networks could still perform much better when all peers cooperate. The key to realizing this behavior is a better distributed incentive scheme.
+Microsoft tried with Maze, worked reasonable, but whitewashing was a provblem \cite{yang2005empirical}.\\
+\\
+The Tribler project aims to create new methods and algorithms for distributed networks. One of the recent features of the Tribler software is to provide anonymous routing, in order to enable privacy and prevent censorship. This feature is currently usable in real life applications, but the performance is often lacking in comparison to open traffic. One of the root causes of the performance degradation is the increased bandwidth requirements. Since the traffic is routed through multiple hops, the total bandwidth requirements are proportional to the number of hops.  
+
+This means there is even more need for a good incentive scheme.
+
+Tribler tried Bartercast, didn't work so well.
+
+
+Bitcoin is a pretty cool thing though, so maybe a blockchain based thingy will be good.
+
+Steffan tried some stuff and made a proof of concept, but didn't work very well at scale.
+
+This thesis shows the requirements and challenges for actually deploying the system, and evaluates its performance.
+
+
+
 TODO ORGANISATIONAL DESCRIPTION OF THESIS
 

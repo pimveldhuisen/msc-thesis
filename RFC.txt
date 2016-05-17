@@ -35,22 +35,35 @@ Data format
 -------------
 The transaction part, which both peers always have:
 
- - transaction data
- - public key requester
- - public key responder
+   0                   1         7                   8
+    0 1 2 3 4 5 6 7 8 9 0 1 2 === 1 2 3 4 5 6 7 8 9 0 1 
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+===+-+-+-+-+-+-+-+-+-+-+-+
+   |   Up  |  Down |          === public key requester |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+===+-+-+-+-+-+-+-+-+-+-+-+
+   |  public key responder    ===        |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+   |                      Credit Inc |
+   +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
+
+
+
+
+ - transaction data    (up 4 + down 4) (unsigned int)
+ - public key requester (74) (char[])
+ - public key responder (74) (char[])
 
 The requester part, that contains the multichain status of the requester, and its signature. This is initially only guaranteed to be known for the requester:
- - agrregate requester
- - sequence number requester
- - previous hash requester
- - signature requester (signs all fields above it)
- - [Stored, but not send] hash_requester (hashes all fields above it)
+ - agrregate requester (total up 8 + td 8) (unsigned long long)
+ - sequence number requester (4 int)
+ - previous hash requester (32 char[])
+ - signature requester (signs all fields above it) (64) (char[])
+ - [Stored, but not send] hash_requester (hashes all fields above it) (32 char[])
 
 The responder part, same as above, but for the responder.
  - total up responder
  - total down responder
  - sequence number responder
- - previous hash responder
+ - previous hash responder 
  - signature responder (signs all fields above it (expect hash_requester))
  - [Stored, but not send] hash_responder (hashes all fields above it (expect hash_requester))
 
