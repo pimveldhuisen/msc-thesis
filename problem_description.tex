@@ -1,22 +1,18 @@
 \chapter{Problem Description}
-An essential problem in functioning of open distributed system is the allocation of reputation and thrust to the different nodes. Internet based systems that allow users to join without verification suffer from various types of users that do not behave properly, i.e. the do not further the common goals of the system. The users may be faulty, lazy, persueing their own goals, or actively trying to undermine the system. For the network to function in spite of these bad users, in most cases it needs some way to distnguish between 'good' and 'bad' users. 
+The goal of this thesis is to implement the ideas of the multichain in a real world scenario and provide experimental validation of the concepts and operational principles of the system. The ultimate objective the multichain is designed for is to enforce cooperation of peers in a decentralized manner. In order to achieve this, the peers should be incentiveced is such a way that their goals are aligned with the goal of the network. Behavior that is benefical to the individual peer should also be benefical for the network as a whole. In concrete, this means that uploading to the network should be rewarded appropriately.\\
+\\
+To reward certain behavior in a peer to peer network, other peers must be made aware of this behavior. We therefore need some sort of record keeping system that keeps track of what peers do. In the network, behavior consists of interactions between peers. A simple record keeping system would consist of each peer maintaining a list of his own interactions. Other peers could then receive the list, and decide based on these interactions whether the peer has shown good behavior in the past and should be rewarded or not. While this approach does in theory provides some incentives to be cooperative, it is obviously very tempting to cheat by providing a modified list, that shows fake good behavior. The goal of the multichain is to prevent this kind of cheating by making it infeasible, thus providing a tamper-proof record keeping system.\\
+\\
+By design, the multichain is a record keeping system only; it does not in itself define good behavior or the rewards that come with such behavior. It merely keeps track of interactions that have taken place in the network. To prevent free riding and provide the right incentives to contribute to the network another system will have to work on top of the multichain. The systems then form a multilayered software architecture with some of the benefits that come from such an architecture. It is possible for different peers in the network to have different policies for judging and rewarding behavior, thus making different decicions based on the same multichain. The layers are however not completely independent, as some policies in the higher layer might affect the feasibility of certain ways of cheating.\\
+\\
+- Distributed	
+autonomous, decentral.
+churn resilient 
 
- Since information is by definition distributed over multiple nodes in the network, no single node is guaranteed to have a complete overview of the information in the network. Protocols to aquire the global state exist, but these may be relatively costly\cite{}. An \emph{open} distributed network, where anonymous nodes may freely join over the internet, provides additional challenges, since not all nodes may be loyal to network; instead of furthering the overall goal of the network, they may strife to achieve their own individual goals. While some of such open systems have shown to be effective \cite{}, they have trouble mantaining consistent records of their users \cite{} in a dsitributed manner, and often use centralized mechanisms to acheive this \cite{}.\\
+\\
+- Scalability 
+store info on thousanbds of users locally, 
+\\
+implement this + real world testing experimental proof
 \\
 
-goal experimental validation of ideas.
-
-real world testing experimental proof thsat it works and scales robust etc plus solves freeriding + tamperproof.
-
-churn resilient , informativeness ratio, evaluate enforcement policies
-store info on thousanbds of users locally, autonomous, decentral.
-
-HFST 1: state of multichain is a pending PR of ulti-chain.
-
-	- Tamper-proof record keeping system
-	- Layered system: a reputation system can be build on top of this
-	- Distributed	
-	- Scalability
-
-
-{Global state vs partial state}
