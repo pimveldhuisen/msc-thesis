@@ -1,0 +1,6 @@
+The results of a number of experiments with the same config:
+	1. 1 MB blocksize, many blocks, big mess, account for everything and a lot of overhead
+	2. 5 MB blocksize, fewer blocks with simpler structure, accounts for everything
+	(3. 100 MB blocksize, no blocks made)
+	(4. 100 MB blocksize, but with closure, works perfectly)
+
