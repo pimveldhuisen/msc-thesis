@@ -18,3 +18,14 @@ SELECT hex(key), total_up, total_down FROM (	SELECT public_key_requester AS key,
 						UNION
  						SELECT public_key_responder AS key, MAX(total_up_responder) AS total_up, MAX(total_down_responder) AS total_down FROM multi_chain GROUP BY key
 						) GROUP BY key ORDER BY total_up;
+
+# Average up and down in a block
+SELECT AVG(up), AVG(down) from multi_chain;
+
+SELECT SUM(
+	total_up), SUM(total_down) FROM (	SELECT public_key_requester AS key, MAX(total_up_requester) AS total_up, MAX(total_down_requester) AS total_down FROM multi_chain GROUP BY key 
+						UNION
+ 						SELECT public_key_responder AS key, MAX(total_up_responder) AS total_up, MAX(total_down_responder) AS total_down FROM multi_chain GROUP BY key
+						) GROUP BY key ORDER BY total_up;
+
+
